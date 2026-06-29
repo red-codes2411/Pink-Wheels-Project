@@ -27,6 +27,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* THIS IS THE HACKATHON LIFESAVER: Forces Tailwind to work instantly */}
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
