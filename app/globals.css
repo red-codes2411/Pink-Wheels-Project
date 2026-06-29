@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 body {
-  /* Forces a soft baby pink background everywhere */
-  background-color: #fdf2f8; 
-  /* Forces dark text so everything is readable */
-  color: #1f2937; 
+  background-color: #fcf8f9; /* Ultra soft baby pink background */
+  color: #1f2937;
+}
+
+/* Hide scrollbars for the Swiggy-style horizontal scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

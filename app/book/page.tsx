@@ -1,109 +1,97 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Coffee, Bus, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, PercentCircle, Coffee, ShieldCheck } from "lucide-react";
 
-export default function BookRide() {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const handleBooking = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    // Simulate API delay for smoothness
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-    }, 1500);
-  };
-
-  if (success) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <CheckCircle2 size={80} className="text-green-500 mb-6" />
-        <h2 className="text-3xl font-black text-gray-800 mb-2 text-center">Booking Confirmed!</h2>
-        <p className="text-gray-500 mb-8 text-center">Your safe transit is secured. We will see you at the boarding point.</p>
-        <Link href="/">
-          <button className="bg-pink-500 text-white font-bold py-3 px-8 rounded-2xl shadow-lg hover:bg-pink-600 transition">
-            Back to Home
-          </button>
-        </Link>
-        <p className="mt-12 text-pink-400 font-medium">Made with care by Dhanyataa &lt;3</p>
-      </div>
-    );
-  }
-
+export default function CheckoutPage() {
   return (
-    <div className="min-h-screen pb-20">
-      <header className="bg-white p-4 shadow-sm flex items-center gap-4 sticky top-0 z-50">
-        <Link href="/" className="text-gray-500 hover:text-pink-500 bg-pink-50 p-2 rounded-full">
-          <ArrowLeft size={20} />
+    <div className="max-w-md mx-auto bg-[#f8f9fa] min-h-screen relative pb-32 font-sans">
+      
+      {/* Minimal Header */}
+      <header className="bg-white px-5 py-4 flex items-center gap-4 sticky top-0 z-50 shadow-sm">
+        <Link href="/">
+          <ArrowLeft className="text-gray-800" size={24} />
         </Link>
-        <h1 className="text-xl font-bold text-gray-800">Review & Book</h1>
+        <h1 className="text-lg font-black text-gray-900 tracking-tight">Review Booking</h1>
       </header>
 
-      <main className="max-w-2xl mx-auto px-4 mt-6">
-        <form onSubmit={handleBooking} className="space-y-6">
+      <main className="px-4 mt-4 space-y-4">
+        
+        {/* Ticket Details Card */}
+        <div className="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="flex justify-between items-start border-b border-dashed border-gray-200 pb-4 mb-4">
+            <div>
+              <h3 className="font-bold text-gray-900 text-lg">Premium AC Sleeper</h3>
+              <p className="text-sm text-gray-500 mt-1">Trichy ➔ Chennai</p>
+            </div>
+            <div className="bg-pink-100 text-pink-700 px-3 py-1 rounded-lg text-xs font-bold uppercase">
+              1 Seat
+            </div>
+          </div>
           
-          {/* Ride Details Card */}
-          <div className="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-pink-50">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <Bus className="text-pink-500" /> Preferences
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-semibold text-gray-600 ml-1">On-board Washroom</label>
-                <select className="w-full mt-1 bg-pink-50/50 border border-pink-100 text-gray-800 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-pink-400 appearance-none">
-                  <option>Required (Clean & Verified)</option>
-                  <option>Not Required</option>
-                </select>
-              </div>
+          <label className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-gray-700">Verified On-board Washroom</span>
+            <input type="checkbox" defaultChecked className="w-5 h-5 accent-pink-500 rounded" />
+          </label>
+        </div>
+
+        {/* Pre-order Add-ons (Instamart style) */}
+        <div className="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Coffee size={18} className="text-pink-500"/> Safe Rest Stop Pre-orders
+          </h3>
+          <div className="flex items-center justify-between bg-pink-50/50 border border-pink-100 p-3 rounded-2xl">
+            <div className="flex items-center gap-3">
+               <div className="text-2xl">☕</div>
+               <div>
+                 <p className="text-sm font-bold text-gray-800">Filter Coffee Combo</p>
+                 <p className="text-xs text-gray-500">Ready upon arrival</p>
+               </div>
+            </div>
+            <button className="bg-white border border-pink-200 text-pink-600 font-extrabold text-xs px-4 py-1.5 rounded-lg shadow-sm">
+              ADD +
+            </button>
+          </div>
+        </div>
+
+        {/* Offers Section */}
+        <div className="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-pink-100 flex justify-between items-center cursor-pointer">
+          <div className="flex items-center gap-3">
+            <PercentCircle className="text-pink-500" size={24} />
+            <div>
+              <p className="font-bold text-gray-900 text-sm">Apply Coupon</p>
+              <p className="text-xs text-gray-500">Save on your safe transit</p>
             </div>
           </div>
+          <span className="text-pink-500 font-bold text-sm">View &gt;</span>
+        </div>
 
-          {/* Pre-order Store Card */}
-          <div className="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-pink-50">
-            <h3 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
-              <Coffee className="text-pink-500" /> Safe Stop Pre-orders
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">
-              Pre-order snacks from our verified Pink Wheels rest stops. They will be ready when you arrive!
-            </p>
-            
-            {/* Quick Select Options */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="border border-pink-100 rounded-2xl p-3 flex flex-col items-center justify-center cursor-pointer hover:bg-pink-50 transition text-center">
-                <span className="text-2xl mb-1">☕</span>
-                <span className="text-sm font-bold text-gray-700">Filter Coffee</span>
-                <span className="text-xs text-pink-500">+ ₹40</span>
-              </div>
-              <div className="border border-pink-100 rounded-2xl p-3 flex flex-col items-center justify-center cursor-pointer hover:bg-pink-50 transition text-center">
-                <span className="text-2xl mb-1">🌸</span>
-                <span className="text-sm font-bold text-gray-700">Sanitary Care Kit</span>
-                <span className="text-xs text-pink-500">+ ₹60</span>
-              </div>
-            </div>
-
-            <textarea 
-              className="w-full bg-pink-50/50 border border-pink-100 rounded-2xl p-4 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-800 resize-none placeholder-gray-400"
-              rows={2}
-              placeholder="Any specific requests or other items?"
-            ></textarea>
+        {/* Bill Details */}
+        <div className="bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <h3 className="font-bold text-gray-900 mb-4">Bill Details</h3>
+          <div className="space-y-2 text-sm text-gray-600 border-b border-dashed border-gray-200 pb-3 mb-3">
+            <div className="flex justify-between"><span>Ticket Fare</span><span>₹850</span></div>
+            <div className="flex justify-between"><span>Safety Fee & Taxes</span><span>₹45</span></div>
           </div>
+          <div className="flex justify-between font-black text-gray-900 text-lg">
+            <span>To Pay</span><span>₹895</span>
+          </div>
+        </div>
 
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white text-lg font-bold py-4 rounded-2xl shadow-lg shadow-pink-200 transition-all flex justify-center items-center h-14"
-          >
-            {loading ? "Processing Secure Payment..." : "Slide to Pay ₹850"}
-          </button>
-        </form>
-
-        <footer className="text-center py-10 text-pink-400 font-medium">
-          Made with care by Dhanyataa &lt;3
-        </footer>
       </main>
+
+      {/* Fixed Checkout Bar (Swiggy Style) */}
+      <div className="fixed bottom-0 w-full max-w-md bg-white p-4 rounded-t-3xl shadow-[0_-15px_40px_-15px_rgba(0,0,0,0.15)] z-50">
+        <div className="flex items-center justify-between bg-pink-500 text-white rounded-2xl p-1 pr-1.5 pl-5 h-14 shadow-lg shadow-pink-200 cursor-pointer hover:bg-pink-600 transition-colors">
+          <div className="flex flex-col">
+            <span className="font-black text-lg leading-tight">₹895</span>
+            <span className="text-[10px] font-bold text-pink-100 uppercase tracking-wider">Total Amount</span>
+          </div>
+          <div className="bg-white text-pink-600 h-11 px-6 rounded-xl font-extrabold flex items-center justify-center gap-2">
+            SLIDE TO PAY <span className="text-xl">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
