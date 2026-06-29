@@ -1,65 +1,146 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    busType: "AC",
+    washroom: "Yes",
+    seating: "Sleeper",
+    preOrder: "None",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        alert("Yay! Your safe journey is booked. See you onboard!");
+      }
+    } catch (err) {
+      alert("Something went wrong, please try again.");
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen bg-soft-white text-gray-800 font-sans">
+      {/* Navbar */}
+      <nav className="bg-baby-pink p-4 shadow-sm flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 relative bg-white rounded-full overflow-hidden border-2 border-hot-pink">
+            {/* Make sure logo.png is in the public folder */}
+            <Image src="/logo.png" alt="Pink Wheels Logo" fill className="object-cover" />
+          </div>
+          <h1 className="text-2xl font-bold text-hot-pink tracking-wide">Pink Wheels</h1>
+        </div>
+        <div className="hidden md:block text-hot-pink font-medium">Safe Transit for Women</div>
+      </nav>
+
+      {/* Hero Section */}
+      <header className="text-center py-12 px-4 bg-gradient-to-b from-baby-pink to-soft-white">
+        <h2 className="text-4xl font-extrabold text-hot-pink mb-4">Trichy to Chennai, Safely.</h2>
+        <p className="max-w-2xl mx-auto text-lg text-gray-600 mb-6">
+          Exclusively for women. Verified drivers, onboard safety measures, and secure Pink Wheels designated rest stops. Travel with peace of mind.
+        </p>
+        <img 
+          src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000&auto=format&fit=crop" 
+          alt="Comfortable Bus" 
+          className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border-4 border-baby-pink h-64 object-cover"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+      </header>
+
+      {/* Booking Form */}
+      <main className="max-w-3xl mx-auto p-6 bg-white rounded-3xl shadow-xl border border-baby-pink mt-[-40px] relative z-10 mb-12">
+        <h3 className="text-2xl font-bold text-hot-pink mb-6 border-b-2 border-baby-pink pb-2">Customize Your Journey</h3>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Passenger Name</label>
+            <input 
+              required 
+              type="text" 
+              className="w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-hot-pink outline-none" 
+              placeholder="Enter your name"
+              onChange={e => setFormData({...formData, name: e.target.value})}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Bus Type */}
+            <div>
+              <label className="block font-medium text-gray-700 mb-1">AC / Non-AC</label>
+              <select 
+                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
+                onChange={e => setFormData({...formData, busType: e.target.value})}
+              >
+                <option>AC</option>
+                <option>Non-AC</option>
+              </select>
+            </div>
+
+            {/* Seating */}
+            <div>
+              <label className="block font-medium text-gray-700 mb-1">Seating Type</label>
+              <select 
+                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
+                onChange={e => setFormData({...formData, seating: e.target.value})}
+              >
+                <option>Sleeper</option>
+                <option>Semi-Sleeper</option>
+                <option>Normal Seater</option>
+              </select>
+            </div>
+
+            {/* Washroom */}
+            <div>
+              <label className="block font-medium text-gray-700 mb-1">Onboard Washroom</label>
+              <select 
+                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
+                onChange={e => setFormData({...formData, washroom: e.target.value})}
+              >
+                <option>Yes (With Washroom)</option>
+                <option>No (Without Washroom)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Rest Stop Pre-orders */}
+          <div className="bg-baby-pink/30 p-6 rounded-2xl border border-baby-pink mt-6">
+            <h4 className="text-xl font-semibold text-hot-pink mb-2">Pink Wheels Safe Rest Stop</h4>
+            <p className="text-sm text-gray-600 mb-4">We only stop at our verified, clean, and safe stores. Pre-order your snacks/essentials now so they are ready when we arrive!</p>
+            <select 
+              className="w-full p-3 border border-pink-200 rounded-xl bg-white"
+              onChange={e => setFormData({...formData, preOrder: e.target.value})}
+            >
+              <option>No Pre-order</option>
+              <option>Hot Filter Coffee & Snacks Combo</option>
+              <option>Hygiene & Sanitary Kit</option>
+              <option>Dinner Meal Box (Veg)</option>
+            </select>
+          </div>
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-hot-pink text-white font-bold text-lg py-4 rounded-xl hover:bg-pink-600 transition shadow-lg disabled:opacity-50"
           >
-            Documentation
-          </a>
-        </div>
+            {loading ? "Confirming..." : "Book My Safe Ride"}
+          </button>
+        </form>
       </main>
+
+      {/* Footer */}
+      <footer className="text-center py-8 bg-baby-pink text-gray-800">
+        <p className="font-medium text-lg">Made with care by Dhanyataa &lt;3</p>
+      </footer>
     </div>
   );
 }
