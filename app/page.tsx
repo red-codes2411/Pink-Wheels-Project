@@ -1,146 +1,90 @@
-"use client";
-import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { Star, ShieldCheck, Clock, MapPin } from "lucide-react";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    busType: "AC",
-    washroom: "Yes",
-    seating: "Sleeper",
-    preOrder: "None",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch("/api/book", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        alert("Yay! Your safe journey is booked. See you onboard!");
-      }
-    } catch (err) {
-      alert("Something went wrong, please try again.");
-    }
-    setLoading(false);
-  };
-
   return (
-    <div className="min-h-screen bg-soft-white text-gray-800 font-sans">
-      {/* Navbar */}
-      <nav className="bg-baby-pink p-4 shadow-sm flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 relative bg-white rounded-full overflow-hidden border-2 border-hot-pink">
-            {/* Make sure logo.png is in the public folder */}
-            <Image src="/logo.png" alt="Pink Wheels Logo" fill className="object-cover" />
+    <div className="min-h-screen font-sans pb-20">
+      {/* Soft Pink Header */}
+      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-pink-100">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-pink-100 p-1 rounded-full shadow-sm">
+              <Image src="/logo.png" alt="Pink Wheels Logo" width={45} height={45} className="rounded-full" />
+            </div>
+            <h1 className="text-2xl font-extrabold text-pink-600 tracking-tight">Pink Wheels</h1>
           </div>
-          <h1 className="text-2xl font-bold text-hot-pink tracking-wide">Pink Wheels</h1>
+          <div className="bg-pink-50 text-pink-600 px-4 py-1.5 rounded-full text-sm font-semibold border border-pink-200">
+            Trichy ➔ Chennai
+          </div>
         </div>
-        <div className="hidden md:block text-hot-pink font-medium">Safe Transit for Women</div>
-      </nav>
-
-      {/* Hero Section */}
-      <header className="text-center py-12 px-4 bg-gradient-to-b from-baby-pink to-soft-white">
-        <h2 className="text-4xl font-extrabold text-hot-pink mb-4">Trichy to Chennai, Safely.</h2>
-        <p className="max-w-2xl mx-auto text-lg text-gray-600 mb-6">
-          Exclusively for women. Verified drivers, onboard safety measures, and secure Pink Wheels designated rest stops. Travel with peace of mind.
-        </p>
-        <img 
-          src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000&auto=format&fit=crop" 
-          alt="Comfortable Bus" 
-          className="w-full max-w-3xl mx-auto rounded-2xl shadow-lg border-4 border-baby-pink h-64 object-cover"
-        />
       </header>
 
-      {/* Booking Form */}
-      <main className="max-w-3xl mx-auto p-6 bg-white rounded-3xl shadow-xl border border-baby-pink mt-[-40px] relative z-10 mb-12">
-        <h3 className="text-2xl font-bold text-hot-pink mb-6 border-b-2 border-baby-pink pb-2">Customize Your Journey</h3>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Passenger Name</label>
-            <input 
-              required 
-              type="text" 
-              className="w-full p-3 border border-pink-200 rounded-xl focus:ring-2 focus:ring-hot-pink outline-none" 
-              placeholder="Enter your name"
-              onChange={e => setFormData({...formData, name: e.target.value})}
-            />
+      <main className="max-w-5xl mx-auto px-4 mt-8">
+        {/* Swiggy-style Hero Banner */}
+        <div className="bg-gradient-to-r from-pink-500 to-pink-400 rounded-3xl p-8 text-white shadow-lg mb-10 relative overflow-hidden">
+          <div className="relative z-10">
+            <h2 className="text-4xl font-black mb-3">Safe Transit, Simplified.</h2>
+            <p className="text-pink-50 text-lg flex items-center gap-2 max-w-md">
+              <ShieldCheck size={24} /> Verified female drivers, secure rest stops, and a community of safe travelers.
+            </p>
+          </div>
+          {/* Decorative background circle */}
+          <div className="absolute -right-10 -top-20 w-64 h-64 bg-white opacity-10 rounded-full blur-2xl"></div>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-800 mb-6 px-2">Available Rides</h3>
+
+        {/* Variety of Options Showcase */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          {/* Option 1: Premium */}
+          <div className="bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-pink-50 hover:shadow-xl transition-all hover:-translate-y-1">
+            <div className="bg-pink-50 rounded-2xl h-40 mb-4 flex items-center justify-center relative overflow-hidden">
+               <span className="absolute top-3 left-3 bg-white text-pink-600 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Bestseller</span>
+               <span className="text-pink-300 font-bold text-xl">AC Sleeper</span>
+            </div>
+            <div className="flex justify-between items-start mb-2">
+              <h4 className="text-lg font-bold text-gray-800">Premium AC Sleeper</h4>
+              <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded-lg text-sm font-bold">
+                4.9 <Star size={14} fill="currentColor" />
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm mb-4 flex gap-4">
+              <span className="flex items-center gap-1"><Clock size={14}/> 10:30 PM</span>
+              <span className="flex items-center gap-1"><MapPin size={14}/> Trichy</span>
+            </p>
+            <Link href="/book">
+              <button className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-2xl transition-colors shadow-md shadow-pink-200">
+                Book for ₹850
+              </button>
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Bus Type */}
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">AC / Non-AC</label>
-              <select 
-                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
-                onChange={e => setFormData({...formData, busType: e.target.value})}
-              >
-                <option>AC</option>
-                <option>Non-AC</option>
-              </select>
+          {/* Option 2: Standard */}
+          <div className="bg-white rounded-3xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-pink-50 hover:shadow-xl transition-all hover:-translate-y-1">
+            <div className="bg-gray-50 rounded-2xl h-40 mb-4 flex items-center justify-center">
+               <span className="text-gray-400 font-bold text-xl">Semi-Sleeper</span>
             </div>
-
-            {/* Seating */}
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Seating Type</label>
-              <select 
-                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
-                onChange={e => setFormData({...formData, seating: e.target.value})}
-              >
-                <option>Sleeper</option>
-                <option>Semi-Sleeper</option>
-                <option>Normal Seater</option>
-              </select>
+            <div className="flex justify-between items-start mb-2">
+              <h4 className="text-lg font-bold text-gray-800">Comfort Semi-Sleeper</h4>
+              <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-0.5 rounded-lg text-sm font-bold">
+                4.7 <Star size={14} fill="currentColor" />
+              </div>
             </div>
-
-            {/* Washroom */}
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Onboard Washroom</label>
-              <select 
-                className="w-full p-3 border border-pink-200 rounded-xl bg-white"
-                onChange={e => setFormData({...formData, washroom: e.target.value})}
-              >
-                <option>Yes (With Washroom)</option>
-                <option>No (Without Washroom)</option>
-              </select>
-            </div>
+            <p className="text-gray-500 text-sm mb-4 flex gap-4">
+              <span className="flex items-center gap-1"><Clock size={14}/> 11:00 PM</span>
+              <span className="flex items-center gap-1"><MapPin size={14}/> Trichy</span>
+            </p>
+            <Link href="/book">
+              <button className="w-full bg-pink-100 text-pink-600 hover:bg-pink-200 font-bold py-3 rounded-2xl transition-colors">
+                Book for ₹550
+              </button>
+            </Link>
           </div>
 
-          {/* Rest Stop Pre-orders */}
-          <div className="bg-baby-pink/30 p-6 rounded-2xl border border-baby-pink mt-6">
-            <h4 className="text-xl font-semibold text-hot-pink mb-2">Pink Wheels Safe Rest Stop</h4>
-            <p className="text-sm text-gray-600 mb-4">We only stop at our verified, clean, and safe stores. Pre-order your snacks/essentials now so they are ready when we arrive!</p>
-            <select 
-              className="w-full p-3 border border-pink-200 rounded-xl bg-white"
-              onChange={e => setFormData({...formData, preOrder: e.target.value})}
-            >
-              <option>No Pre-order</option>
-              <option>Hot Filter Coffee & Snacks Combo</option>
-              <option>Hygiene & Sanitary Kit</option>
-              <option>Dinner Meal Box (Veg)</option>
-            </select>
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            className="w-full bg-hot-pink text-white font-bold text-lg py-4 rounded-xl hover:bg-pink-600 transition shadow-lg disabled:opacity-50"
-          >
-            {loading ? "Confirming..." : "Book My Safe Ride"}
-          </button>
-        </form>
+        </div>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center py-8 bg-baby-pink text-gray-800">
-        <p className="font-medium text-lg">Made with care by Dhanyataa &lt;3</p>
-      </footer>
     </div>
   );
 }
